@@ -54,6 +54,7 @@ void setup(){
 
   // start advertising
   BLE.advertise();
+  Serial.println("Setup finished");
 
 }
 
@@ -73,7 +74,8 @@ void loop(){
         digitalWrite(COMMUNICATION_ACTIVE_LED, HIGH);
         // Get the data
         char cmd_line[20];
-        strncpy(cmd_line,(char*)cherokeyCharacteristic.value(),cherokeyCharacteristic.valueLength());
+        strncpy(cmd_line,(char*)cherokeyCharacteristic.value(),MAX_CHARACTERISTIC_LEN);
+        cmd_line[MAX_CHARACTERISTIC_LEN] = '\0';
         Serial.print("Data arrived:");
         Serial.println(cmd_line);
 
@@ -103,23 +105,29 @@ void execute_cmd(char *cmd_line){
   char bot_direction, right_wheels_speed[4], left_wheels_speed[4],time_to_go[5],eot;
   bot_direction = cmd_line[0];
   strncpy(right_wheels_speed,&cmd_line[1],3);
+  right_wheels_speed[3] = '\0';
+  
   strncpy(left_wheels_speed,&cmd_line[4],3);
+  left_wheels_speed[3] = '\0';
+  
   strncpy(time_to_go,&cmd_line[7],4);
+  time_to_go[4] = '\0';
+  
   eot = cmd_line[11];
 
   Serial.print("Direction: ");
   Serial.print(bot_direction);
 
-  Serial.print("Right weels: ");
+  Serial.print(" Right weels: ");
   Serial.print(right_wheels_speed);
 
-  Serial.print("Left wheel: ");
-  Serial.print(left_wheels_speed);
+  Serial.print(" Left wheel: ");
+  Serial.print( left_wheels_speed);
 
-  Serial.print("Right Time to go: ");
+  Serial.print(" Right Time to go: ");
   Serial.print(time_to_go);
 
-  Serial.print("EOT: ");
+  Serial.print(" EOT: ");
   Serial.println(eot);
 
   switch (bot_direction) {
