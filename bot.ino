@@ -59,6 +59,7 @@ void setup(){
 }
 
 void loop(){
+  
  // listen for BLE peripherals to connect:
   BLEDevice central = BLE.central();
 
@@ -103,15 +104,19 @@ void loop(){
 
 void execute_cmd(char *cmd_line){
   char bot_direction, right_wheels_speed[4], left_wheels_speed[4],time_to_go[5],eot;
+  int right_wheels_speed_i, left_wheels_speed_i,time_to_go_i;
   bot_direction = cmd_line[0];
   strncpy(right_wheels_speed,&cmd_line[1],3);
   right_wheels_speed[3] = '\0';
+  right_wheels_speed_i = atoi(right_wheels_speed);
   
   strncpy(left_wheels_speed,&cmd_line[4],3);
   left_wheels_speed[3] = '\0';
+  left_wheels_speed_i = atoi(left_wheels_speed);
   
   strncpy(time_to_go,&cmd_line[7],4);
   time_to_go[4] = '\0';
+  time_to_go_i = atoi(time_to_go);
   
   eot = cmd_line[11];
 
@@ -119,13 +124,13 @@ void execute_cmd(char *cmd_line){
   Serial.print(bot_direction);
 
   Serial.print(" Right weels: ");
-  Serial.print(right_wheels_speed);
+  Serial.print(right_wheels_speed_i);
 
   Serial.print(" Left wheel: ");
-  Serial.print( left_wheels_speed);
+  Serial.print( left_wheels_speed_i);
 
   Serial.print(" Right Time to go: ");
-  Serial.print(time_to_go);
+  Serial.print(time_to_go_i);
 
   Serial.print(" EOT: ");
   Serial.println(eot);
@@ -135,22 +140,28 @@ void execute_cmd(char *cmd_line){
       break;
     case 'F':botFW(atoi(left_wheels_speed),atoi(right_wheels_speed));
       delay(atoi(time_to_go));
+      botStop();
       break;
 
     case 'B':botBW(atoi(left_wheels_speed),atoi(right_wheels_speed));
       delay(atoi(time_to_go));
+      botStop();
       break;
 
     case 'L':botLeft(atoi(left_wheels_speed),atoi(right_wheels_speed));
       delay(atoi(time_to_go));
+      botStop();
       break;
 
     case 'R':botRight(atoi(left_wheels_speed),atoi(right_wheels_speed));
       delay(atoi(time_to_go));
+      botStop();
       break;
     default: Serial.println("Carattere direzione non valido");
       break;
   }
 }
+
+
 
 
