@@ -138,23 +138,23 @@ void execute_cmd(char *cmd_line){
   switch (bot_direction) {
     case 'S':botStop();
       break;
-    case 'F':botFW(atoi(left_wheels_speed),atoi(right_wheels_speed));
-      delay(atoi(time_to_go));
+    case 'F':botFW(left_wheels_speed_i,right_wheels_speed_i);
+      delay(time_to_go_i);
       botStop();
       break;
 
-    case 'B':botBW(atoi(left_wheels_speed),atoi(right_wheels_speed));
-      delay(atoi(time_to_go));
+    case 'B':botBW(left_wheels_speed_i,right_wheels_speed_i);
+      delay(time_to_go_i);
       botStop();
       break;
 
-    case 'L':botLeft(atoi(left_wheels_speed),atoi(right_wheels_speed));
-      delay(atoi(time_to_go));
+    case 'L':botLeft(left_wheels_speed_i,right_wheels_speed_i);
+      delay(time_to_go_i);
       botStop();
       break;
 
-    case 'R':botRight(atoi(left_wheels_speed),atoi(right_wheels_speed));
-      delay(atoi(time_to_go));
+    case 'R':botRight(left_wheels_speed_i,right_wheels_speed_i);
+      delay(time_to_go_i);
       botStop();
       break;
     default: Serial.println("Carattere direzione non valido");
